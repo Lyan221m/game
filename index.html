@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Empire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-area">
+            <div class="stats">
+                <div class="cookie-count" id="cookieCount">0 Cookies</div>
+                <div class="cps" id="cpsDisplay">0 Cookies pro Sekunde</div>
+            </div>
+            <div class="cookie" id="mainCookie"></div>
+        </div>
+
+        <div class="upgrades">
+            <h2>🛒 Upgrades</h2>
+            <div id="upgradesList"></div>
+        </div>
+    </div>
+
+    <div class="auto-clickers" id="autoClickersDisplay" style="display: none;">
+        <h4>🤖 Auto-Clicker</h4>
+        <div id="autoClickersList"></div>
+    </div>
+
+    <div class="cheat-console" id="cheatConsole">
+        <button class="close-console" onclick="closeCheatConsole()">×</button>
+        <h3>🕹️ CHEAT KONSOLE</h3>
+        <div class="cheat-commands">
+            Verfügbare Befehle:<br>
+            • <strong>cookies [zahl]</strong> - Füge Cookies hinzu<br>
+            • <strong>reset</strong> - Spiel zurücksetzen<br>
+            • <strong>multiply [zahl]</strong> - Multipliziere alle Cookies<br>
+            • <strong>maxupgrades</strong> - Alle Upgrades auf Maximum<br>
+            • <strong>godmode</strong> - Unendliche Cookies
+        </div>
+        <input type="text" class="cheat-input" id="cheatInput" placeholder="Befehl eingeben..." onkeypress="handleCheatInput(event)">
+        <div id="cheatOutput" style="margin-top: 10px; color: #ffff00;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

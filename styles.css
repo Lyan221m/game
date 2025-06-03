@@ -1,0 +1,240 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Arial', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.game-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.stats {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.cookie-count {
+    font-size: 3em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+}
+
+.cps {
+    font-size: 1.2em;
+    opacity: 0.8;
+}
+
+.cookie {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #d2691e 0%, #8b4513 70%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    border: 8px solid #cd853f;
+}
+
+.cookie:hover {
+    transform: scale(1.05);
+}
+
+.cookie:active {
+    transform: scale(0.95);
+}
+
+.cookie::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #654321;
+    border-radius: 50%;
+    top: 30px;
+    left: 50px;
+}
+
+.cookie::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #654321;
+    border-radius: 50%;
+    bottom: 40px;
+    right: 60px;
+}
+
+.upgrades {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.upgrades h2 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.upgrade {
+    background: rgba(255,255,255,0.1);
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.upgrade:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateX(5px);
+}
+
+.upgrade.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.upgrade.disabled:hover {
+    transform: none;
+    border-color: transparent;
+}
+
+.upgrade-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.upgrade-cost {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.upgrade-owned {
+    float: right;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
+}
+
+.click-effect {
+    position: absolute;
+    pointer-events: none;
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: float-up 1s ease-out forwards;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+.cheat-console {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.9);
+    color: #00ff00;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    display: none;
+    z-index: 1000;
+    border: 2px solid #00ff00;
+    min-width: 400px;
+}
+
+.cheat-console h3 {
+    margin-top: 0;
+    color: #00ff00;
+    text-align: center;
+}
+
+.cheat-input {
+    width: 100%;
+    background: black;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    margin: 10px 0;
+}
+
+.cheat-commands {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.close-console {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #ff0000;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.auto-clickers {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.auto-clicker {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.auto-clicker-dot {
+    width: 10px;
+    height: 10px;
+    background: #00ff00;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
