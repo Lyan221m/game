@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Empire</title>
+    <title>Bitcoin Empire</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="game-area">
             <div class="stats">
-                <div class="cookie-count" id="cookieCount">0 Cookies</div>
-                <div class="cps" id="cpsDisplay">0 Cookies pro Sekunde</div>
+                <div class="bitcoin-count" id="bitcoinCount">0 Bitcoin</div>
+                <div class="bps" id="bpsDisplay">0 Bitcoin pro Sekunde</div>
             </div>
-            <div class="cookie" id="mainCookie"></div>
+            <div class="bitcoin" id="mainBitcoin">
+                <div class="bitcoin-symbol">₿</div>
+            </div>
         </div>
 
         <div class="upgrades">
@@ -23,7 +25,7 @@
     </div>
 
     <div class="auto-clickers" id="autoClickersDisplay" style="display: none;">
-        <h4>🤖 Auto-Clicker</h4>
+        <h4>🤖 Auto-Miner</h4>
         <div id="autoClickersList"></div>
     </div>
 
@@ -32,11 +34,11 @@
         <h3>🕹️ CHEAT KONSOLE</h3>
         <div class="cheat-commands">
             Verfügbare Befehle:<br>
-            • <strong>cookies [zahl]</strong> - Füge Cookies hinzu<br>
+            • <strong>bitcoin [zahl]</strong> - Füge Bitcoin hinzu<br>
             • <strong>reset</strong> - Spiel zurücksetzen<br>
-            • <strong>multiply [zahl]</strong> - Multipliziere alle Cookies<br>
+            • <strong>multiply [zahl]</strong> - Multipliziere alle Bitcoin<br>
             • <strong>maxupgrades</strong> - Alle Upgrades auf Maximum<br>
-            • <strong>godmode</strong> - Unendliche Cookies
+            • <strong>godmode</strong> - Unendliche Bitcoin
         </div>
         <input type="text" class="cheat-input" id="cheatInput" placeholder="Befehl eingeben..." onkeypress="handleCheatInput(event)">
         <div id="cheatOutput" style="margin-top: 10px; color: #ffff00;"></div>

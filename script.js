@@ -1,61 +1,61 @@
 // Game State
 let gameState = {
-    cookies: 0,
+    bitcoin: 0,
     totalClicks: 0,
-    cps: 0,
+    bps: 0,
     godMode: false
 };
 
 // Upgrades Configuration
 let upgrades = [
     {
-        name: "Cursor",
-        description: "Klickt automatisch alle 5 Sekunden",
+        name: "CPU Miner",
+        description: "Mined automatisch alle 5 Sekunden",
         baseCost: 15,
         cost: 15,
         owned: 0,
-        cps: 0.2,
+        bps: 0.2,
         type: 'autoClicker'
     },
     {
-        name: "Großmutter",
-        description: "Backt Cookies für dich",
+        name: "GPU Rig",
+        description: "Leistungsstarkes Mining-Setup",
         baseCost: 100,
         cost: 100,
         owned: 0,
-        cps: 1,
+        bps: 1,
         type: 'autoClicker'
     },
     {
-        name: "Farm",
-        description: "Wächst Cookie-Zutaten an",
+        name: "Mining Farm",
+        description: "Industrielles Bitcoin Mining",
         baseCost: 1100,
         cost: 1100,
         owned: 0,
-        cps: 8,
+        bps: 8,
         type: 'autoClicker'
     },
     {
-        name: "Mine",
-        description: "Gräbt nach Cookie-Mineralien",
+        name: "ASIC Center",
+        description: "Spezialisierte Mining Hardware",
         baseCost: 12000,
         cost: 12000,
         owned: 0,
-        cps: 47,
+        bps: 47,
         type: 'autoClicker'
     },
     {
-        name: "Fabrik",
-        description: "Massenproduktion von Cookies",
+        name: "Mining Corporation",
+        description: "Globales Mining-Imperium",
         baseCost: 130000,
         cost: 130000,
         owned: 0,
-        cps: 260,
+        bps: 260,
         type: 'autoClicker'
     },
     {
-        name: "Klick-Power",
-        description: "Verdoppelt Cookies pro Klick",
+        name: "Click-Power",
+        description: "Verdoppelt Bitcoin pro Klick",
         baseCost: 50,
         cost: 50,
         owned: 0,
@@ -68,10 +68,27 @@ let upgrades = [
 let clickPower = 1;
 let autoClickerIntervals = [];
 
+// Check if bitcoin.png exists and replace the CSS bitcoin
+function initializeBitcoin() {
+    const bitcoinElement = document.getElementById('mainBitcoin');
+    const img = new Image();
+    img.onload = function() {
+        // If bitcoin.png loads successfully, replace with image
+        bitcoinElement.innerHTML = '';
+        bitcoinElement.className = 'bitcoin-image';
+        bitcoinElement.style.backgroundImage = 'url(assets/bitcoin.png)';
+    };
+    img.onerror = function() {
+        // If bitcoin.png doesn't exist, keep the CSS version
+        console.log('Bitcoin PNG not found, using CSS version');
+    };
+    img.src = 'assets/bitcoin.png';
+}
+
 // Display Functions
 function updateDisplay() {
-    document.getElementById('cookieCount').textContent = formatNumber(Math.floor(gameState.cookies)) + ' Cookies';
-    document.getElementById('cpsDisplay').textContent = formatNumber(gameState.cps.toFixed(1)) + ' Cookies pro Sekunde';
+    document.getElementById('bitcoinCount').textContent = formatNumber(Math.floor(gameState.bitcoin)) + ' Bitcoin';
+    document.getElementById('bpsDisplay').textContent = formatNumber(gameState.bps.toFixed(1)) + ' Bitcoin pro Sekunde';
     updateUpgradesDisplay();
     updateAutoClickersDisplay();
 }
@@ -85,13 +102,13 @@ function formatNumber(num) {
 }
 
 // Click Functions
-function clickCookie(event) {
-    let earnedCookies = clickPower;
-    gameState.cookies += earnedCookies;
+function clickBitcoin(event) {
+    let earnedBitcoin = clickPower;
+    gameState.bitcoin += earnedBitcoin;
     gameState.totalClicks++;
 
     // Klick-Effekt anzeigen
-    showClickEffect(event, '+' + earnedCookies);
+    showClickEffect(event, '+' + earnedBitcoin);
     updateDisplay();
 }
 
@@ -120,7 +137,7 @@ function updateUpgradesDisplay() {
 
     upgrades.forEach((upgrade, index) => {
         const upgradeDiv = document.createElement('div');
-        upgradeDiv.className = 'upgrade' + (gameState.cookies < upgrade.cost ? ' disabled' : '');
+        upgradeDiv.className = 'upgrade' + (gameState.bitcoin < upgrade.cost ? ' disabled' : '');
         
         upgradeDiv.innerHTML = `
             <div class="upgrade-name">${upgrade.name}</div>
@@ -129,7 +146,7 @@ function updateUpgradesDisplay() {
             ${upgrade.owned > 0 ? `<div class="upgrade-owned">${upgrade.owned}</div>` : ''}
         `;
 
-        if (gameState.cookies >= upgrade.cost) {
+        if (gameState.bitcoin >= upgrade.cost) {
             upgradeDiv.addEventListener('click', () => buyUpgrade(index));
         }
 
@@ -139,12 +156,12 @@ function updateUpgradesDisplay() {
 
 function buyUpgrade(index) {
     const upgrade = upgrades[index];
-    if (gameState.cookies >= upgrade.cost) {
-        gameState.cookies -= upgrade.cost;
+    if (gameState.bitcoin >= upgrade.cost) {
+        gameState.bitcoin -= upgrade.cost;
         upgrade.owned++;
 
         if (upgrade.type === 'autoClicker') {
-            gameState.cps += upgrade.cps;
+            gameState.bps += upgrade.bps;
             // Starte Auto-Clicker für dieses Upgrade
             startAutoClicker(upgrade);
         } else if (upgrade.type === 'clickMultiplier') {
@@ -162,7 +179,7 @@ function buyUpgrade(index) {
 function startAutoClicker(upgrade) {
     const interval = setInterval(() => {
         if (!gameState.godMode) {
-            gameState.cookies += upgrade.cps * 5; // 5 Sekunden worth of production
+            gameState.bitcoin += upgrade.bps * 5; // 5 Sekunden worth of production
         }
         updateDisplay();
     }, 5000); // Alle 5 Sekunden
@@ -185,7 +202,7 @@ function updateAutoClickersDisplay() {
             div.className = 'auto-clicker';
             div.innerHTML = `
                 <div class="auto-clicker-dot"></div>
-                ${upgrade.name} (${upgrade.owned}) - ${formatNumber(upgrade.cps * upgrade.owned)}/s
+                ${upgrade.name} (${upgrade.owned}) - ${formatNumber(upgrade.bps * upgrade.owned)}/s
             `;
             autoClickersList.appendChild(div);
         });
@@ -197,7 +214,7 @@ function updateAutoClickersDisplay() {
 // Passive Income Timer
 setInterval(() => {
     if (!gameState.godMode) {
-        gameState.cookies += gameState.cps;
+        gameState.bitcoin += gameState.bps;
     }
     updateDisplay();
 }, 1000);
@@ -226,15 +243,15 @@ function executeCheat(command, output) {
     const arg = parts[1];
 
     switch(cmd) {
-        case 'cookies':
+        case 'bitcoin':
             const amount = parseInt(arg) || 1000;
-            gameState.cookies += amount;
-            output.textContent = `${amount} Cookies hinzugefügt!`;
+            gameState.bitcoin += amount;
+            output.textContent = `${amount} Bitcoin hinzugefügt!`;
             break;
         
         case 'reset':
-            gameState.cookies = 0;
-            gameState.cps = 0;
+            gameState.bitcoin = 0;
+            gameState.bps = 0;
             gameState.totalClicks = 0;
             clickPower = 1;
             upgrades.forEach(u => {
@@ -248,15 +265,15 @@ function executeCheat(command, output) {
         
         case 'multiply':
             const multiplier = parseInt(arg) || 2;
-            gameState.cookies *= multiplier;
-            output.textContent = `Cookies mit ${multiplier} multipliziert!`;
+            gameState.bitcoin *= multiplier;
+            output.textContent = `Bitcoin mit ${multiplier} multipliziert!`;
             break;
         
         case 'maxupgrades':
             upgrades.forEach(upgrade => {
-                upgrade.owned = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+                upgrade.owned = 999999;
                 if (upgrade.type === 'autoClicker') {
-                    gameState.cps += upgrade.cps * 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+                    gameState.bps += upgrade.bps * 999999;
                 }
             });
             output.textContent = 'Alle Upgrades maximiert!';
@@ -265,7 +282,7 @@ function executeCheat(command, output) {
         case 'godmode':
             gameState.godMode = !gameState.godMode;
             if (gameState.godMode) {
-                gameState.cookies = Infinity;
+                gameState.bitcoin = Infinity;
                 output.textContent = 'God Mode aktiviert!';
             } else {
                 output.textContent = 'God Mode deaktiviert!';
@@ -281,8 +298,11 @@ function executeCheat(command, output) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Cookie Click Event
-    document.getElementById('mainCookie').addEventListener('click', clickCookie);
+    // Initialize Bitcoin (check for PNG)
+    initializeBitcoin();
+
+    // Bitcoin Click Event
+    document.getElementById('mainBitcoin').addEventListener('click', clickBitcoin);
 
     // Cheat Code Detection
     document.addEventListener('keydown', (e) => {
