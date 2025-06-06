@@ -39,6 +39,19 @@ body {
     opacity: 0.8;
 }
 
+.additional-stats {
+    margin-top: 15px;
+    font-size: 0.9em;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.additional-stats div {
+    margin: 2px 0;
+}
+
 .bitcoin {
     width: 200px;
     height: 200px;
@@ -69,7 +82,6 @@ body {
     font-weight: bold;
 }
 
-/* Bitcoin PNG Image Style - wird verwendet wenn bitcoin.png existiert */
 .bitcoin-image {
     width: 200px;
     height: 200px;
@@ -113,6 +125,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    position: relative;
 }
 
 .upgrade:hover {
@@ -139,10 +152,13 @@ body {
 .upgrade-cost {
     color: #ffd700;
     font-weight: bold;
+    margin-top: 5px;
 }
 
 .upgrade-owned {
-    float: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: rgba(255,255,255,0.2);
     padding: 2px 8px;
     border-radius: 12px;
@@ -226,6 +242,8 @@ body {
     padding: 15px;
     border-radius: 10px;
     backdrop-filter: blur(10px);
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .auto-clicker {
@@ -247,4 +265,379 @@ body {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
+}
+
+/* Notification System */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slide-in 0.3s ease-out;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.notification.info {
+    background: rgba(52, 152, 219, 0.9);
+    border-left: 4px solid #3498db;
+}
+
+.notification.success {
+    background: rgba(46, 204, 113, 0.9);
+    border-left: 4px solid #2ecc71;
+}
+
+.notification.warning {
+    background: rgba(241, 196, 15, 0.9);
+    border-left: 4px solid #f1c40f;
+}
+
+.notification.danger {
+    background: rgba(231, 76, 60, 0.9);
+    border-left: 4px solid #e74c3c;
+}
+
+.notification.fade-out {
+    animation: fade-out 0.5s ease-out forwards;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .game-area {
+        flex: none;
+        min-height: 60vh;
+    }
+    
+    .upgrades {
+        flex: none;
+        max-height: 40vh;
+    }
+    
+    .bitcoin-count {
+        font-size: 2em;
+    }
+    
+    .bitcoin, .bitcoin-image {
+        width: 150px;
+        height: 150px;
+        font-size: 3em;
+    }
+    
+    .auto-clickers {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin: 10px;
+    }
+    
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+/* Market Status Indicator */
+.market-indicator {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.7);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    border-left: 4px solid;
+}
+
+.market-indicator.bull {
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+.market-indicator.bear {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.market-indicator.neutral {
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+/* Efficiency indicators in upgrades */
+.upgrade[data-type="efficiency"] {
+    border-left: 4px solid #3498db;
+}
+
+.upgrade[data-type="security"] {
+    border-left: 4px solid #9b59b6;
+}
+
+.upgrade[data-type="autoClicker"] {
+    border-left: 4px solid #e67e22;
+}
+
+/* Advanced Visual Effects */
+.bitcoin.mining {
+    animation: mining-glow 2s infinite;
+}
+
+@keyframes mining-glow {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    50% {
+        box-shadow: 0 10px 30px rgba(247, 147, 26, 0.6);
+    }
+}
+
+/* Electricity Cost Warning */
+.negative-income {
+    color: #e74c3c !important;
+    animation: warning-blink 1s infinite;
+}
+
+@keyframes warning-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Progress Bars for Upgrades */
+.upgrade-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.upgrade-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f7931a, #ffb347);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Market Status Display */
+.market-status {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.8);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+    transition: all 0.3s ease;
+}
+
+.market-status.bull {
+    border-color: #2ecc71;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+}
+
+.market-status.bear {
+    border-color: #e74c3c;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+}
+
+.market-status.neutral {
+    border-color: #f39c12;
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+}
+
+/* Hack Warning Animation */
+.hack-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 0, 0, 0.1);
+    pointer-events: none;
+    animation: hack-flash 0.5s ease-out;
+    z-index: 999;
+}
+
+@keyframes hack-flash {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Advanced Tooltip System */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.tooltip:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0,0,0,0.9);
+    margin-bottom: -5px;
+}
+
+/* Glitch Effect for Hacks */
+.glitch {
+    animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    60% { transform: translateX(-1px); }
+    80% { transform: translateX(1px); }
+    100% { transform: translateX(0); }
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Achievement Notifications */
+.achievement {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 30px;
+    border-radius: 15px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    z-index: 1001;
+    animation: achievement-popup 3s ease-out forwards;
+}
+
+@keyframes achievement-popup {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    30% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+/* Energy Efficiency Indicator */
+.efficiency-meter {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    margin: 8px 0;
+    overflow: hidden;
+}
+
+.efficiency-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
+    transition: width 0.5s ease;
+}
+
+/* Danger Zone Styling */
+.danger-zone {
+    background: rgba(231, 76, 60, 0.1) !important;
+    border: 2px solid #e74c3c !important;
+}
+
+.danger-zone::before {
+    content: '⚠️ VERLUST';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: bold;
 }
